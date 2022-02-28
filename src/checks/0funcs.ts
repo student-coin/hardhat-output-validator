@@ -71,6 +71,10 @@ export const checkFunction = (
 		} else {
 			const check = (io: 'inputs' | 'outputs') => {
 				const paramsOrReturns = io === 'inputs' ? 'params' : 'returns'
+				const severity = config.checks[paramsOrReturns] ?? defaultSeverity
+				if (!severity) {
+					return
+				}
 				const errorType =
 					io === 'inputs'
 						? ErrorType.MissingParams
@@ -82,7 +86,7 @@ export const checkFunction = (
 						if (!devDocEntryFunc?.[paramsOrReturns]?.[paramName]) {
 							addError(
 								errorType,
-								defaultSeverity,
+								severity,
 								`Function: (${abiEntity.name}), ${paramsOrReturns.slice(
 									0,
 									-1
@@ -108,17 +112,19 @@ export const checkFunction = (
 		}
 
 		if (!hasDevDoc && hasUserDoc) {
-			if (abiEntity.inputs.length > 0) {
+			const paramsSeverity = config.checks.params ?? defaultSeverity
+			if (abiEntity.inputs.length > 0 && paramsSeverity) {
 				addError(
 					ErrorType.MissingAllParams,
-					defaultSeverity,
+					paramsSeverity,
 					`Function: (${abiEntity.name})`
 				)
 			}
-			if (abiEntity.outputs.length > 0) {
+			const returnSeverity = config.checks.returns ?? defaultSeverity
+			if (abiEntity.outputs.length > 0 && returnSeverity) {
 				addError(
 					ErrorType.MissingAllReturnParams,
-					defaultSeverity,
+					returnSeverity,
 					`Function: (${abiEntity.name})`
 				)
 			}

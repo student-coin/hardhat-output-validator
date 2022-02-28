@@ -47,7 +47,6 @@ export const checkForErrors = (
 			if (isExternal) {
 				return
 			}
-
 			if (entity.type === 'constructor') {
 				checkConstructor(entity, errorHandler, info)
 			} else if (entity.type === 'event') {

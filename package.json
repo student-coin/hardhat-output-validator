@@ -1,7 +1,7 @@
 {
 
 	"name": "@student-coin/hardhat-output-validator",
-	"version": "0.1.20-stc",
+	"version": "0.1.20-stc2",
 	"description": "Zero-config Hardhat plugin to check the build output of Solidity contracts",
 	"repository": "github:student-coin/hardhat-output-validator",
 	"author": "Indeavr",
